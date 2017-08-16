@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  
+<head>
+    <meta charset="UTF-8">
+    <title>FabLab InfoScreen</title>
+
+    <!---CDN Links-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+    <div>
+        <div>
+            <nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Home<span class="sr-only">(current)</span></a></li>
+                    <li><a href="/product">Products</a></li>
+                    <li><a href="/about">About us</a></li>
+                </ul>
+            </nav>
+        </div>
+        <br/>
+        <div class="jumbotron">
+            <h2>LabManagers</h2>
+            <ul class="list-unstyled" id="labmanagers">
+                <script>
+                    var listElements;
+                    for (var i = 0; i < labmanagers.length; i++) {
+                        var labmanager = labmanagers[i];
+                        var start = labmanager.start.dateTime || labmanager.start.date;
+                        var end = labmanager.end.dateTime || labmanager.end.date;
+//                        listElements += '<li class="media">';
+                        listElements += '<img class="d-flex mr-3" src="images/index.svg" alt="Generic placeholder image">';
+                        listElements += '<div class="media-body">';
+                        listElements += '<h3 class="mt-0 mb-1">' + labmanager.summary + '</h3>';
+                        listElements += start + ' - ' + end;
+                        listElements += '</div>';
+                        //</li>';
+                        var ul = document.getElementById("labmanagers");
+                        var li = document.createElement("li");
+                        li.appendChild(document.createTextNode(listElement));
+                        ul.appendChild(li);
+                    }
+                </script>
+            </ul>
+        </div>
+        <div class="jumbotron">
+            <h2>Workshops</h2>
+            <ul class="list-unstyled">
+                <li class="media">
+                    <img class="d-flex mr-3" src="images/index.svg" alt="Generic placeholder image">
+                    <div class="media-body">
+                        <h3 class="mt-0 mb-1">List-based media object</h3>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        <script>
+                            for (var i = 0; i < workshops.length; i++) {
+                                var workshop = workshops[i];
+                                var start = workshop.start.dateTime || workshop.start.date;
+                                var end = workshop.end.dateTime || workshop.end.date;
+                                body += '<li>' + start + ' - ' + end + ' | ' + workshop.summary + '</li>';
+                            }
+                        </script>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

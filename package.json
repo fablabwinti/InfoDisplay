@@ -1,0 +1,28 @@
+{
+  "name": "info-display",
+  "version": "1.0.0",
+  "description": "InfoDisplay for FabLab Winti",
+  "main": "quickstart.js",
+  "author": "Claudio Prezzi",
+  "license": "LGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fablabwinti/InfoDisplay.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fablabwinti/InfoDisplay/issues"
+  },
+  "homepage": "https://github.com/fablabwinti/InfoDisplay#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "express": "^4.15.4",
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^20.1.0",
+    "jQuery": "^1.7.4",
+    "jsdom": "^11.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  }
+}
