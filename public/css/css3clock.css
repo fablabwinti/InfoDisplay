@@ -5,7 +5,7 @@
     border-radius: 500px; /* clock round corner radius */
     box-shadow: inset 0 0 10px gray;
     border: 0 solid gray; /* thickness of outer border */
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .outer_face::before, .outer_face::after, .outer_face .marker { /* time markers syle */

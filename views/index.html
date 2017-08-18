@@ -29,79 +29,8 @@
 -->
 
         <div class="row">
-            <div class="col-md-8">
-                <h2>FabLab Winti Öffnungszeiten</h2>
-                <div class="jumbotron labmanagers">
-                    <ul class="list-unstyled" id="labmanagers">
-                        <li class="row">
-                            <img class="col-md-1" src="images/LabManager/Wolfgang_Lochbihler.jpg" alt="Wolfgang Lochbihler">
-                            <div class="col-md-7">
-                                <h3>SA, 19.08.2017 13:00 - 17:00</h3>
-                                <h4>Wolfgang Lochbihler</h4>
-                            </div>
-                        </li>
-                        <li class="row">
-                            <img class="col-md-1" src="images/LabManager/Patrick_Gubelmann.jpg" alt="Patrick Gubelmann">
-                            <div class="col-md-7">
-                                <h3>DI, 22.08.2017 18:00 - 21:00</h3>
-                                <h4>Patrick Gubelmann</h4>
-                            </div>
-                        </li>
-                        <li class="row">
-                            <img class="col-md-1" src="images/LabManager/Marcel_Zollinger.jpg" alt="Marcel Zollinger">
-                            <div class="col-md-7">
-                                <h3>MI, 23.08.2017 18:00 - 21:00</h3>
-                                <h4>Marcel Zollinger</h4>
-                            </div>
-                        </li>
-                        <li class="row">
-                            <img class="col-md-1" src="images/LabManager/Claudio_Prezzi.jpg" alt="Claudio Prezzi">
-                            <div class="col-md-7">
-                                <h3>DO, 24.08.2017 18:00 - 21:00</h3>
-                                <h4>Claudio Prezzi</h4>
-                            </div>
-                        </li>
-                        <li class="row">
-                            <img class="col-md-1" src="images/LabManager/Philipp_Bachmann.jpg" alt="Phillip Bachmann">
-                            <div class="col-md-7">
-                                <h3>SA, 26.08.2017 13:00 - 17:00</h3>
-                                <h4>Phillip Bachmann</h4>
-                            </div>
-                        </li>
-                        <li class="row">
-                            <img class="col-md-1" src="images/LabManager/Damian_Schneider.jpg" alt="Damian Schneider">
-                            <div class="col-md-7">
-                                <h3>DI, 29.08.2017 18:00 - 21:00</h3>
-                                <h4>Damian Schneider</h4>
-                            </div>
-                        </li>
-                        
-<!--
-                        <script>
-                            var listElements;
-                            for (var i = 0; i < labmanagers.length; i++) {
-                                var labmanager = labmanagers[i];
-                                var start = labmanager.start.dateTime || labmanager.start.date;
-                                var end = labmanager.end.dateTime || labmanager.end.date;
-                                listElements += '<li class="media">';
-                                listElements += '<img class="d-flex mr-3" src="images/index.svg" alt="Generic placeholder image">';
-                                listElements += '<div class="media-body">';
-                                listElements += '<h3 class="mt-0 mb-1">' + labmanager.summary + '</h3>';
-                                listElements += start + ' - ' + end;
-                                listElements += '</div>';
-                                listElements += '/</li>';
-                                var ul = document.getElementById("labmanagers");
-                                var li = document.createElement("li");
-                                li.appendChild(document.createTextNode(listElement));
-                                ul.appendChild(li);
-                            }
-                        </script>
--->
-                    </ul>
-                </div>
-            </div>
             
-            <div class="col-md-4">
+            <div class="col-md-4 clock">
                 <div id="liveclock" class="outer_face center-block">
                     <div class="marker oneseven"></div>
                     <div class="marker twoeight"></div>
@@ -148,8 +77,95 @@
                     }
 
                 </script>
-            </div>
-        </div>
+            </div><!-- end col-md-4 -->
+
+            <div class="col-md-4 today">
+                <h2>LabManager</h2>
+                <div class="jumbotron">
+                    <img class="col-md-5 picture" src="images/LabManager/Patrick_Gubelmann.jpg" alt="Patrick Gubelmann">
+                    <div class="col-md-7 details">
+                        <h3>Heute</h3>
+                        <h4>Patrick Gubelmann</h4>
+                        <p>Stärken:<br />
+                        - 3D-Druck<br />
+                        - Lasercutter<br />
+                        - CAD<br />
+                        - Machinen Konstruktion<br />
+                    </div>
+                </div>
+            </div><!-- end col-md-4 -->
+
+            <div class="col-md-4 following">
+                <h2>Nächste Tage</h2>
+                <ul class="labmanagers">
+                    <li class="row">
+                        <img class="col-md-2 picture" src="images/LabManager/Wolfgang_Lochbihler.jpg" alt="Wolfgang Lochbihler">
+                        <div class="col-md-9 details">
+                            <h3>Sa 19.08.2017,  13:00 - 17:00</h3>
+                            <h4>Wolfgang Lochbihler</h4>
+                        </div>
+                    </li>
+                    <li class="row">
+                        <img class="col-md-2 picture" src="images/LabManager/Patrick_Gubelmann.jpg" alt="Patrick Gubelmann">
+                        <div class="col-md-9 details">
+                            <h3>Di 22.08.2017,  18:00 - 21:00</h3>
+                            <h4>Patrick Gubelmann</h4>
+                        </div>
+                    </li>
+                    <li class="row">
+                        <img class="col-md-2 picture" src="images/LabManager/Marcel_Zollinger.jpg" alt="Marcel Zollinger">
+                        <div class="col-md-9 details">
+                            <h3>Mi 23.08.2017,  18:00 - 21:00</h3>
+                            <h4>Marcel Zollinger</h4>
+                        </div>
+                    </li>
+                    <li class="row">
+                        <img class="col-md-2 picture" src="images/LabManager/Claudio_Prezzi.jpg" alt="Claudio Prezzi">
+                        <div class="col-md-9 details">
+                            <h3>Do 24.08.2017,  18:00 - 21:00</h3>
+                            <h4>Claudio Prezzi</h4>
+                        </div>
+                    </li>
+                    <li class="row">
+                        <img class="col-md-2 picture" src="images/LabManager/Philipp_Bachmann.jpg" alt="Phillip Bachmann">
+                        <div class="col-md-9 details">
+                            <h3>Sa 26.08.2017,  13:00 - 17:00</h3>
+                            <h4>Phillip Bachmann</h4>
+                        </div>
+                    </li>
+                    <li class="row">
+                        <img class="col-md-2 picture" src="images/LabManager/Damian_Schneider.jpg" alt="Damian Schneider">
+                        <div class="col-md-9 details">
+                            <h3>Di 29.08.2017,  18:00 - 21:00</h3>
+                            <h4>Damian Schneider</h4>
+                        </div>
+                    </li>
+
+<!--
+                    <script>
+                        var listElements;
+                        for (var i = 0; i < labmanagers.length; i++) {
+                            var labmanager = labmanagers[i];
+                            var start = labmanager.start.dateTime || labmanager.start.date;
+                            var end = labmanager.end.dateTime || labmanager.end.date;
+                            listElements += '<li class="media">';
+                            listElements += '<img class="d-flex mr-3" src="images/index.svg" alt="Generic placeholder image">';
+                            listElements += '<div class="media-body">';
+                            listElements += '<h3 class="mt-0 mb-1">' + labmanager.summary + '</h3>';
+                            listElements += start + ' - ' + end;
+                            listElements += '</div>';
+                            listElements += '/</li>';
+                            var ul = document.getElementById("labmanagers");
+                            var li = document.createElement("li");
+                            li.appendChild(document.createTextNode(listElement));
+                            ul.appendChild(li);
+                        }
+                    </script>
+-->
+                </ul>
+            </div><!-- end col-md-4 -->
+
+        </div><!-- end row -->
 
         <div class="row">
             <div class="col-md-12">
@@ -212,8 +228,8 @@
 
                     </ul>
                 </div>
-            </div>
-        </div>
+            </div><!-- end col-md-12 -->
+        </div><!-- end row -->
             
     </div>
 </body>
