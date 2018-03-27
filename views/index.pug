@@ -1,0 +1,60 @@
+//- index.pug
+extends layout
+
+block content
+    //h1 #{message}
+    div(class="row")
+        div(class="col-md-4 clock")
+            div(id="liveclock" class="outer_face center-block")
+                div(class="marker oneseven")
+                div(class="marker twoeight")
+                div(class="marker fourten")
+                div(class="marker fiveeleven")
+                div(class="inner_face")
+                    div(class="logo")
+                    div(class="date") #{curdate}
+                    div(class="hand hour")
+                    div(class="hand minute")
+                    div(class="hand second")
+
+        div(class="col-md-4 today")
+            h2 Heute
+            div(class="jumbotron")
+                if today.name 
+                    img(class="col-md-5 picture" src="images/LabManager/"+today.name+".jpg" alt=today.name)
+                    div(class="col-md-7 details")
+                        h3 #{today.start} bis #{today.end}
+                        h4 LabManager: #{today.name}
+                        p Stärken:
+                        //- 3D-Druck
+                        //- Lasercutter
+                        //- CAD
+                        //- Machinen Konstruktion
+                else
+                    div(class="col-md-7 details")
+                        h3 GESCHLOSSEN
+
+        div(class="col-md-4 following")
+            h2 Nächste Tage
+            ul(class="labmanagers")
+                each labmanager in labmanagers
+                    li(class="row")
+                        if labmanager.name == "noch offen"
+                            img(class="col-md-2 picture" src="images/LabManager/dummy.jpg" alt=labmanager.name)
+                        else
+                            img(class="col-md-2 picture" src="images/LabManager/"+labmanager.name+".jpg" alt=labmanager.name)
+                        div(class="col-md-9 details")
+                            h3 #{labmanager.start} bis #{labmanager.end}
+                            h4 #{labmanager.summary}
+
+    div(class="row")
+        div(class="col-md-12")
+            h2 Kommende Workshops / Events
+            div(class="jumbotron workshops")
+                ul(class="list-unstyled row")
+                    each workshop in workshops
+                        li(class="col-md-3")
+                            //img(src="images/Workshops/arduino.png" alt="Arudino Einführungskurs")
+                            div
+                                h3 #{workshop.summary}
+                                h4 #{workshop.start} bis #{workshop.end}

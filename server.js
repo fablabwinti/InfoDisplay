@@ -7,9 +7,10 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 var path = __dirname + '/views/';
-  
-var labmanagers = {};
-var workshops = {};
+
+var today = Array(); //{start: '', end: '', summary: ''};
+var labmanagers = Array(); //{start: '', end: '', summary: ''};
+var workshops = Array(); // {start: '', end: '', summary: ''};
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/calendar-nodejs-quickstart.json
@@ -120,7 +121,7 @@ function listCalendars(auth) {
       console.log('The API returned an error: ' + err);
       return;
     }
-    var calendars = response.items;
+    console.log(calendars);
     for (var i = 0; i < calendars.length; i++) {
       console.log('%s', JSON.stringify(calendars[i]));
       //console.log('%s', calendar[i].calendarId);
@@ -138,8 +139,8 @@ function listEvents(auth) {
   calendar.events.list({
     auth: auth,
     calendarId: 'primary',
-    timeMin: (new Date()).toISOString(),
-    maxResults: 10,
+    timeMin: new Date().toISOString(),
+    maxResults: 6,
     singleEvents: true,
     orderBy: 'startTime'
   }, function(err, response) {
@@ -148,17 +149,35 @@ function listEvents(auth) {
       return;
     }
     var events = response.items;
-    labmanagers = events;
     if (events.length == 0) {
       console.log('No upcoming events found.');
     } else {
       console.log('Got ' + events.length +' upcoming LabManagers from Google Calendar.');
-//      for (var i = 0; i < events.length; i++) {
-//        var event = events[i];
-//        var start = event.start.dateTime || event.start.date;
-//        var end = event.end.dateTime || event.end.date;
-//        console.log('%s - %s : %s', start, end, event.summary);
-//      }
+      var firstToday = 1;
+      var startUTC = new Date(events[0].start.dateTime);
+      if (startUTC.getDate() == new Date().getDate()){
+          firstToday = 0;
+      }
+      for (var i = 0; i < (events.length - firstToday); i++) {
+        var event = events[i];
+        var startUTC = new Date(event.start.dateTime);
+        var start = formatStartDate(startUTC);
+        var endUTC = new Date(event.end.dateTime);
+        var end = formatEndTime(endUTC);
+        var summary = event.summary;
+        var startName = event.summary.search(/LabManager:/i) + 11;
+        var name;
+        if (startName > 11) {
+            name = event.summary.substr(startName).trim();
+        }
+        if (startUTC.getDate() == new Date().getDate()){
+          start = formatEndTime(startUTC);
+          today = {start: start, end: end, summary: summary, name: name};
+        } else {
+          labmanagers.push({start: start, end: end, summary: summary, name: name});
+        }
+        console.log('%s bis %s : %s (%s)', start, end, summary, name);
+      }
     }
   });
   listWorkshops(auth);
@@ -175,7 +194,7 @@ function listWorkshops(auth) {
     auth: auth,
     calendarId: '6mi8quogdni3bvnjhe787ci7i4@group.calendar.google.com',
     timeMin: (new Date()).toISOString(),
-    maxResults: 8,
+    maxResults: 4,
     singleEvents: true,
     orderBy: 'startTime'
   }, function(err, response) {
@@ -184,72 +203,67 @@ function listWorkshops(auth) {
       return;
     }
     var events = response.items;
-    workshops = events;
+    //workshops = events;
     if (events.length == 0) {
       console.log('No upcoming events found.');
     } else {
       console.log('Got ' + events.length +' upcoming Workshops from Google Calendar.');
-//      for (var i = 0; i < events.length; i++) {
-//        var event = events[i];
-//        var start = event.start.dateTime || event.start.date;
-//        var end = event.end.dateTime || event.end.date;
-//        console.log('%s - %s : %s', start, end, event.summary);
-//      }
+      for (var i = 0; i < events.length; i++) {
+        var event = events[i];
+        var startUTC = new Date(event.start.dateTime);
+        var start = formatStartDate(startUTC);
+        var endUTC = new Date(event.end.dateTime);
+        var end = formatEndTime(endUTC);
+        var summary = event.summary;
+        workshops.push({start: start, end: end, summary: summary});
+        console.log('%s - %s : %s', start, end, summary);
+      }
     }
   });
+}
+
+function formatStartDate(utc){
+    var day = utc.getDate();
+    var month = utc.getMonth()+1;
+    var year = utc.getFullYear();
+    var hours = utc.getHours();
+    var minutes = utc.getMinutes();
+    if (day<10) day = '0' + day;
+    if (month<10) month = '0' + month;
+    if (hours<10) hours = '0' + hours;
+    if (minutes<10) minutes = '0' + minutes;
+    return day + '.' + month + '.' + year + ' ' + hours + ':' + minutes;
+}
+
+function formatEndTime(utc){
+    var hours = utc.getHours();
+    var minutes = utc.getMinutes();
+    if (hours<10) hours = '0' + hours;
+    if (minutes<10) minutes = '0' + minutes;
+    return hours + ':' + minutes;
 }
 
 
 // serve static content
 app.use(express.static('public'));
 
+// set view engine and views folder
+app.set('view engine', 'pug');
+app.set('views', './views');
+
 app.use('/', router);
 
 router.get('/',function(req, res){
-  res.sendFile(path + 'index.html');
+    var now = new Date();
+    var curdate = now.getDate() + '.' + (now.getMonth()+1) + '.' + now.getFullYear();
+    res.render('index', { title: 'FabLab InfoDisplay', message: 'InfoDisplay', curdate: curdate, today: today, labmanagers: labmanagers, workshops: workshops});
+    //res.sendFile(path + 'index.html');
 });
-  
-router.get('/product',function(req, res){
-  res.sendFile(path + 'product.html');
-});
-  
-router.get('/about',function(req, res){
-  res.sendFile(path + 'about.html');
-});
-  
+
 app.use('*',function(req, res){
   res.send('Error 404: Not Found!');
 });
-  
+
 app.listen(3000,function(){
   console.log('Server running at Port 3000');
 });
-
-
-/*app.get('/', function (req, res) {
-    var body; 
-    body = '<h2>LabManagers</h2>';
-    body += '<ul>';
-    for (var i = 0; i < labmanagers.length; i++) {
-        var labmanager = labmanagers[i];
-        var start = labmanager.start.dateTime || labmanager.start.date;
-        var end = labmanager.end.dateTime || labmanager.end.date;
-        body += '<li>' + start + ' - ' + end + ' | ' + labmanager.summary + '</li>';
-    }
-    body += '</ul>';
-    body += '<h2>Workshops</h2>';
-    body += '<ul>';
-    for (var i = 0; i < workshops.length; i++) {
-        var workshop = workshops[i];
-        var start = workshop.start.dateTime || workshop.start.date;
-        var end = workshop.end.dateTime || workshop.end.date;
-        body += '<li>' + start + ' - ' + end + ' | ' + workshop.summary + '</li>';
-    }
-    body += '</ul>';
-    res.send(body);
-});
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
-});
-*/
-  

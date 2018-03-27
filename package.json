@@ -19,7 +19,10 @@
     "google-auth-library": "^0.10.0",
     "googleapis": "^20.1.0",
     "jQuery": "^1.7.4",
-    "jsdom": "^11.1.0"
+    "jsdom": "^11.1.0",
+    "moment": "^2.20.1",
+    "moment-timezone": "^0.5.14",
+    "pug": "^2.0.0-rc.4"
   },
   "devDependencies": {},
   "scripts": {

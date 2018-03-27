@@ -1,0 +1,4 @@
+{
+    "marcel": {image: "Marcel.jpg", knowledge: ["3d-Druck", "Sketchup"]},
+    "claudio": {image: "Claudio.jpg", knowledge: ["3d-Druck", "Lasercutter", "Fräsen", "Drehen"]}
+}
