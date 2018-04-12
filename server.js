@@ -6,17 +6,17 @@ var googleAuth = require('google-auth-library');
 var express = require('express');
 var app = express();
 var router = express.Router();
-var path = __dirname + '/views/';
+//var path = __dirname + '/views/';
 
 var today = Array(); //{start: '', end: '', summary: ''};
 var labmanagers = Array(); //{start: '', end: '', summary: ''};
 var workshops = Array(); // {start: '', end: '', summary: ''};
+var lmDB = Array();
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/calendar-nodejs-quickstart.json
 var SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
-var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-    process.env.USERPROFILE) + '/.credentials/';
+var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'calendar-nodejs-quickstart.json';
 
 
@@ -30,6 +30,16 @@ fs.readFile('client_secret.json', function processClientSecrets(err, content) {
   // Google Calendar API.
   authorize(JSON.parse(content), listEvents);
 });
+
+// Load LabManager DB from local file.
+fs.readFile('labmanagers.json', function processLabManagers(err, content) {
+  if (err) {
+    console.log('Error loading labmanagers file: ' + err);
+    return;
+  }
+  lmDB = JSON.parse(content);
+});
+
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -130,7 +140,7 @@ function listCalendars(auth) {
 }
 
 /**
- * Lists the next 10 events on the user's primary calendar.
+ * Lists the next 6 events on the user's primary calendar.
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
@@ -166,17 +176,18 @@ function listEvents(auth) {
         var end = formatEndTime(endUTC);
         var summary = event.summary;
         var startName = event.summary.search(/LabManager:/i) + 11;
-        var name;
+        var name, lm;
         if (startName > 11) {
             name = event.summary.substr(startName).trim();
+            lm = lmDB[name];
         }
         if (startUTC.getDate() == new Date().getDate()){
           start = formatEndTime(startUTC);
-          today = {start: start, end: end, summary: summary, name: name};
+          today = {start: start, end: end, lm: lm};
         } else {
-          labmanagers.push({start: start, end: end, summary: summary, name: name});
+          labmanagers.push({start: start, end: end, lm: lm});
         }
-        console.log('%s bis %s : %s (%s)', start, end, summary, name);
+        console.log('%s bis %s : %s (%s)', start, end, lm.name, lm.image);
       }
     }
   });

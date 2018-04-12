@@ -3,7 +3,7 @@ extends layout
 
 block content
     //h1 #{message}
-    div(class="row")
+    div(class="row head")
         div(class="col-md-4 clock")
             div(id="liveclock" class="outer_face center-block")
                 div(class="marker oneseven")
@@ -20,16 +20,17 @@ block content
         div(class="col-md-4 today")
             h2 Heute
             div(class="jumbotron")
-                if today.name 
-                    img(class="col-md-5 picture" src="images/LabManager/"+today.name+".jpg" alt=today.name)
+                if today.lm 
+                    img(class="col-md-5 picture" src="images/LabManager/"+today.lm.image alt=today.lm.name)
                     div(class="col-md-7 details")
                         h3 #{today.start} bis #{today.end}
-                        h4 LabManager: #{today.name}
-                        p Stärken:
-                        //- 3D-Druck
-                        //- Lasercutter
-                        //- CAD
-                        //- Machinen Konstruktion
+                        h4 LabManager: 
+                        h3 #{today.lm.name}
+                        h4 Stärken:
+                        ul(class="knowledge-list")
+                            each knowledge in today.lm.knowledge 
+                                li(class="knowledge-line") #{knowledge}
+
                 else
                     div(class="col-md-7 details")
                         h3 GESCHLOSSEN
@@ -39,15 +40,15 @@ block content
             ul(class="labmanagers")
                 each labmanager in labmanagers
                     li(class="row")
-                        if labmanager.name == "noch offen"
-                            img(class="col-md-2 picture" src="images/LabManager/dummy.jpg" alt=labmanager.name)
+                        if labmanager.lm.name == "noch offen"
+                            img(class="col-md-2 picture" src="images/LabManager/dummy.jpg" alt="")
                         else
-                            img(class="col-md-2 picture" src="images/LabManager/"+labmanager.name+".jpg" alt=labmanager.name)
+                            img(class="col-md-2 picture" src="images/LabManager/"+labmanager.lm.image alt=labmanager.lm.name)
                         div(class="col-md-9 details")
                             h3 #{labmanager.start} bis #{labmanager.end}
-                            h4 #{labmanager.summary}
+                            h4 LabManager: #{labmanager.lm.name}
 
-    div(class="row")
+    div(class="row foot")
         div(class="col-md-12")
             h2 Kommende Workshops / Events
             div(class="jumbotron workshops")
