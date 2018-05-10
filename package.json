@@ -2,8 +2,8 @@
   "name": "info-display",
   "version": "1.0.0",
   "description": "InfoDisplay for FabLab Winti",
-  "main": "quickstart.js",
-  "author": "Claudio Prezzi",
+  "main": "server.js",
+  "author": "Claudio Prezzi <claudio.prezzi@fablabwinti.ch>",
   "license": "LGPL-3.0",
   "repository": {
     "type": "git",
@@ -26,6 +26,6 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "test"
+    "start": "node server.js"
   }
 }
