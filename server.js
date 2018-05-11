@@ -11,6 +11,7 @@ var router = express.Router();
 var today = Array(); //{start: '', end: '', summary: ''};
 var labmanagers = Array(); //{start: '', end: '', summary: ''};
 var workshops = Array(); // {start: '', end: '', summary: ''};
+var clientSecrets = Array();
 var lmDB = Array();
 
 // If modifying these scopes, delete your previously saved credentials
@@ -26,10 +27,22 @@ fs.readFile('client_secret.json', function processClientSecrets(err, content) {
     console.log('Error loading client secret file: ' + err);
     return;
   }
+  clientSecrets = JSON.parse(content);
   // Authorize a client with the loaded credentials, then call the
-  // Google Calendar API.
-  authorize(JSON.parse(content), listEvents);
+  // Google Calendar API to read Events and Workshops.
+  authorize(clientSecrets, listEvents);
 });
+
+setInterval(function getGoogleCallendars() {
+    fs.readFile('client_secret.json', function processClientSecrets(err, content) {
+      if (err) {
+        console.log('Error loading client secret file: ' + err);
+        return;
+      }
+      authorize(JSON.parse(content), listEvents);
+    });
+}, 1000 * 60 * 15); // every 15 minutes
+
 
 // Load LabManager DB from local file.
 fs.readFile('labmanagers.json', function processLabManagers(err, content) {
@@ -180,12 +193,15 @@ function listEvents(auth) {
         if (startName > 11) {
             name = event.summary.substr(startName).trim();
             lm = lmDB[name];
-        }
-        if (startUTC.getDate() == new Date().getDate()){
-          start = formatEndTime(startUTC);
-          today = {start: start, end: end, lm: lm};
-        } else {
-          labmanagers.push({start: start, end: end, lm: lm});
+            if (typeof(lm) === 'undefined'){
+            } else {
+                if (startUTC.getDate() == new Date().getDate()){
+                  start = formatEndTime(startUTC);
+                  today = {start: start, end: end, lm: lm};
+                } else {
+                  labmanagers.push({start: start, end: end, lm: lm});
+                }
+            }
         }
         console.log('%s bis %s : %s (%s)', start, end, lm.name, lm.image);
       }

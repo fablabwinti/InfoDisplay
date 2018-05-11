@@ -8,6 +8,8 @@ window.requestAnimationFrame = window.requestAnimationFrame
                                || window.msRequestAnimationFrame
                                //|| function(f){setTimeout(f, 1000 / 60);}
 
+var actDay = new Date().getDay();
+
 function updateclock() {
     var curdate = new Date();
     var hour_as_degree = (curdate.getHours() + curdate.getMinutes() / 60 ) / 12 * 360;
@@ -16,12 +18,16 @@ function updateclock() {
     $('.hand.hour').css('transform','rotate(' + hour_as_degree + 'deg)');
     $('.hand.minute').css('transform','rotate(' + minute_as_degree + 'deg)');
     $('.hand.second').css('transform','rotate(' + second_as_degree + 'deg)');
+    if (curdate.getDay() != actDay){
+        location.reload();
+    }
+    /*
     if (curdate.getHours() == 0 && curdate.getMinutes() == 0 && curdate.getSeconds() == 0){
         var day = curdate.getDay();
         var month = curdate.getMonth();
         var year = curdate.getFullYear();
         $('.date').css('content', day + '.' + month + '.' + year);
-    }
+    }*/
     requestAnimationFrame(updateclock);
 }
 
