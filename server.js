@@ -172,6 +172,7 @@ function listEvents(auth) {
       return;
     }
     var events = response.items;
+    labmanagers = Array();
     if (events.length == 0) {
       console.log('No upcoming events found.');
     } else {
@@ -230,6 +231,7 @@ function listWorkshops(auth) {
       return;
     }
     var events = response.items;
+    workshops = Array();
     //workshops = events;
     if (events.length == 0) {
       console.log('No upcoming events found.');
@@ -291,6 +293,6 @@ app.use('*',function(req, res){
   res.send('Error 404: Not Found!');
 });
 
-app.listen(3000,function(){
-  console.log('Server running at Port 3000');
+app.listen(3030,function(){
+  console.log('Server running at Port 3030');
 });
