@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/fablabwinti/InfoDisplay#readme",
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "express": "^4.15.4",
     "google-auth-library": "^0.10.0",
     "googleapis": "^20.1.0",
